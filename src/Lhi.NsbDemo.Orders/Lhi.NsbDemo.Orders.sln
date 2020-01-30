@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.Api", "Lhi.NsbDemo.Orders.Api\Lhi.NsbDemo.Orders.Api.csproj", "{B2E6BDCC-4B81-4C72-9C29-20B27088F963}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.Sagas", "Lhi.NsbDemo.Orders.Sagas\Lhi.NsbDemo.Orders.Sagas.csproj", "{E9391E0E-52EB-404B-86EE-B619B8E64579}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.PlatformHandler", "Lhi.NsbDemo.Orders.PlatformHandler\Lhi.NsbDemo.Orders.PlatformHandler.csproj", "{953222CA-937E-4D09-AD49-B2DAB2E2560F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.EmailNotificationHandler", "Lhi.NsbDemo.Orders.EmailNotificationHandler\Lhi.NsbDemo.Orders.EmailNotificationHandler.csproj", "{C011E07C-1C24-4177-8744-58450D423ACA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.PlatformHandler.Tests", "Lhi.NsbDemo.Orders.PlatformHandler.Tests\Lhi.NsbDemo.Orders.PlatformHandler.Tests.csproj", "{82F12CFA-76A2-4B58-B796-1DFDCCC600B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.EmailNotificationHandler.Tests", "Lhi.NsbDemo.Orders.EmailNotificationHandler.Tests\Lhi.NsbDemo.Orders.EmailNotificationHandler.Tests.csproj", "{78C4D9BA-B618-47E5-9D11-EE0C86BAAD4E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.Sagas.Tests", "Lhi.NsbDemo.Orders.Sagas.Tests\Lhi.NsbDemo.Orders.Sagas.Tests.csproj", "{AF2C2AF0-2D55-4BB4-9066-35922164EC44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{C24E47E0-950C-4DDE-9DED-EABBA48060AF}"
+	ProjectSection(SolutionItems) = preProject
+		create-docker-network.txt = create-docker-network.txt
+		docker-compose CLI cmd.txt = docker-compose CLI cmd.txt
+		docker-compose-build.yml = docker-compose-build.yml
+		docker-compose-local.yml = docker-compose-local.yml
+		docker-compose.qa.yml = docker-compose.qa.yml
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lhi.NsbDemo.Orders.UAT", "Lhi.NsbDemo.Orders.UAT\Lhi.NsbDemo.Orders.UAT.csproj", "{8558D62F-A22D-4BC1-96E9-A84E0D9A93DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lhi.NsbDemo.Orders.IntegrationTest", "Lhi.NsbDemo.Orders.IntegrationTest\Lhi.NsbDemo.Orders.IntegrationTest.csproj", "{EED15E4F-9BB5-414E-A923-563D48A065DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2E6BDCC-4B81-4C72-9C29-20B27088F963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E6BDCC-4B81-4C72-9C29-20B27088F963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E6BDCC-4B81-4C72-9C29-20B27088F963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E6BDCC-4B81-4C72-9C29-20B27088F963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9391E0E-52EB-404B-86EE-B619B8E64579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9391E0E-52EB-404B-86EE-B619B8E64579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9391E0E-52EB-404B-86EE-B619B8E64579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9391E0E-52EB-404B-86EE-B619B8E64579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953222CA-937E-4D09-AD49-B2DAB2E2560F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953222CA-937E-4D09-AD49-B2DAB2E2560F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953222CA-937E-4D09-AD49-B2DAB2E2560F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953222CA-937E-4D09-AD49-B2DAB2E2560F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C011E07C-1C24-4177-8744-58450D423ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C011E07C-1C24-4177-8744-58450D423ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C011E07C-1C24-4177-8744-58450D423ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C011E07C-1C24-4177-8744-58450D423ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F12CFA-76A2-4B58-B796-1DFDCCC600B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F12CFA-76A2-4B58-B796-1DFDCCC600B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F12CFA-76A2-4B58-B796-1DFDCCC600B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F12CFA-76A2-4B58-B796-1DFDCCC600B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C4D9BA-B618-47E5-9D11-EE0C86BAAD4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C4D9BA-B618-47E5-9D11-EE0C86BAAD4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C4D9BA-B618-47E5-9D11-EE0C86BAAD4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C4D9BA-B618-47E5-9D11-EE0C86BAAD4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2C2AF0-2D55-4BB4-9066-35922164EC44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2C2AF0-2D55-4BB4-9066-35922164EC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2C2AF0-2D55-4BB4-9066-35922164EC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2C2AF0-2D55-4BB4-9066-35922164EC44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8558D62F-A22D-4BC1-96E9-A84E0D9A93DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8558D62F-A22D-4BC1-96E9-A84E0D9A93DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8558D62F-A22D-4BC1-96E9-A84E0D9A93DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8558D62F-A22D-4BC1-96E9-A84E0D9A93DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED15E4F-9BB5-414E-A923-563D48A065DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED15E4F-9BB5-414E-A923-563D48A065DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED15E4F-9BB5-414E-A923-563D48A065DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED15E4F-9BB5-414E-A923-563D48A065DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E005224-527D-4622-9B2E-92779C3B70D1}
+	EndGlobalSection
+EndGlobal

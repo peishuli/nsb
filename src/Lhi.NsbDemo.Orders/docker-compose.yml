@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  api:
+    image: lhi.nsbdemo.orders.api:1.0
+    
+  emailnotificationhandler:
+    image: lhi.nsbdemo.orders.emailnotificationhandler:1.0
+    
+  platformhandler:
+    image: lhi.nsbdemo.orders.platformhandler:1.0
+    
+  sagas:
+    image: lhi.nsbdemo.orderssagas:1.0
+    

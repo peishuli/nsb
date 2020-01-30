@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<license id="1e46a912-62df-4932-9a30-2149eed89f8d" expiration="2018-04-01T15:31:15.0000000" type="Trial" Applications="All" LicenseVersion="6.0" WorkerThreads="Max" AllowedNumberOfWorkerNodes="Max" LicenseType="Trial" MaxMessageThroughputPerSecond="Max">
+  <name>peishu.li@lehighhanson.com</name>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>Tuoad7LUAXr/3/MDGhI8ZDK77JM=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>1wm3N7zHaOUJls+/PWnKWCvTM2oMDTJ1GM6lpaFzYln7xEGaZcmOEZrbHV4JcF+mFJ7ZIwxhYICnq/NLm9WIqqYyFZUjMGdiUbKKDA0R/XdN3DA2whDmCMhUVjYq2kGTERyxcJuIQYFqpA315DClMieDlj2b+zHVnXmcDt4JyRU=</SignatureValue>
+  </Signature>
+</license>

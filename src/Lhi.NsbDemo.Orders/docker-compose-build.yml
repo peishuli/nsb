@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./Lhi.NsbDemo.Orders.Api/
+      dockerfile: Dockerfile
+    
+  emailnotificationhandler:
+    build:
+      context: ./Lhi.NsbDemo.Orders.EmailNotificationHandler/
+      dockerfile: Dockerfile
+    
+  platformhandler:
+    build:
+      context: ./Lhi.NsbDemo.Orders.PlatformHandler/
+      dockerfile: Dockerfile
+   
+  sagas:
+    build:
+      context: ./Lhi.NsbDemo.Orders.Sagas/
+      dockerfile: Dockerfile
+    

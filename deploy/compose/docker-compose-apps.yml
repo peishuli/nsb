@@ -1,0 +1,48 @@
+version: '3.0'
+
+services:
+  api:
+    image: peishu/lhi.nsbdemo.orders.api      
+    environment:
+      Stackify.ApiKey: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      Stackify.ApiName: Lhi.NsbDemo.Orders
+      Stackify.Environment: pli-dev
+      elasticsearch_url: http://elasticsearch:9200
+      rabbitmq_url: host=rabbitmq;port=5672;username=guest;password=guest;
+      sql_connection_string: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+    ports: 
+      - 8080:80/tcp
+
+  emailnotificationhandler:
+    image: peishu/lhi.nsbdemo.orders.emailnotificationhandler
+    environment:
+      Stackify.ApiKey: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      Stackify.ApiName: Lhi.NsbDemo.Orders
+      Stackify.Environment: pli-dev
+      elasticsearch_url: http://elasticsearch:9200
+      rabbitmq_url: host=rabbitmq;port=5672;username=guest;password=guest;
+  
+  platformhandler:
+    image: peishu/lhi.nsbdemo.orders.platformhandler
+    environment:
+      Stackify.ApiKey: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      Stackify.ApiName: Lhi.NsbDemo.Orders
+      Stackify.Environment: pli-dev
+      elasticsearch_url: http://elasticsearch:9200
+      rabbitmq_url: host=rabbitmq;port=5672;username=guest;password=guest;
+      sql_connection_string: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+    
+  sagas:
+    image: peishu/lhi.nsbdemo.orders.sagas
+    environment:
+      Stackify.ApiKey: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      Stackify.ApiName: Lhi.NsbDemo.Orders
+      Stackify.Environment: pli-dev
+      elasticsearch_url: http://elasticsearch:9200
+      rabbitmq_url: host=rabbitmq;port=5672;username=guest;password=guest;
+      sql_connection_string: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+
+networks:
+  default:
+    external:
+      name: nsb-network

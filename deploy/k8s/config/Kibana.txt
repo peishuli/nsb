@@ -1,0 +1,11 @@
+Kibana notes
+
+1) Config index: nsbdemo-*
+
+2a) Discover
+2a) search
+by tnxId (trackingId from API response)
+by Application is Lhi.NsbDemo.Orders
+2b) selecting fields
+Application, Service, Operation, message
+

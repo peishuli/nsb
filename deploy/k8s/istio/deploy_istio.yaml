@@ -1,0 +1,372 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nsb-demo
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3-management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: guest
+            - name: RABBITMQ_DEFAULT_PASS
+              value: guest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: nsb-demo
+  labels:
+    service: rabbitmq
+spec:
+  ports:
+    - name: "5672"
+      port: 5672
+      targetPort: 5672
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+  type: LoadBalancer
+  selector:
+    service: rabbitmq
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.0
+          ports:
+            - containerPort: 9200
+            - containerPort: 9300
+          env:
+            - name: ES_JAVA_OPTS
+              value: -Xmx256m -Xms256m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: nsb-demo
+  labels:
+    service: elasticsearch
+spec:
+  ports:
+    - name: "9200"
+      port: 9200
+      targetPort: 9200
+    - name: "9300"
+      port: 9300
+      targetPort: 9300
+  type: LoadBalancer
+  selector:
+    service: elasticsearch
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana-oss:6.3.0
+          ports:
+            - containerPort: 5601
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: nsb-demo
+  labels:
+    service: kibana
+spec:
+  ports:
+    - name: "5601"
+      port: 5601
+      targetPort: 5601
+  type: LoadBalancer
+  selector:
+    service: kibana
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sqldb
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: sqldb
+    spec:
+      containers:
+        - name: sqldb
+          image: microsoft/mssql-server-linux:2017-latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: MSSQL_SA_PASSWORD
+              value: Pass@word
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_PID
+              value: Developer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqldb
+  namespace: nsb-demo
+  labels:
+    service: sqldb
+spec:
+  ports:
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
+  type: LoadBalancer
+  selector:
+    service: sqldb
+
+
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: api
+    spec:
+      initContainers:
+        - name: rabbitmq-probe
+          # image: peishu/rabbitmqprobe:v1
+          image: peishu/rmq_probe:v1
+      containers:
+        - name: api
+          image: peishu/lhi.nsbdemo.orders.api:v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: Stackify.ApiKey
+              value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+            - name: Stackify.ApiName
+              value: Lhi.NsbDemo.Orders
+            - name: Stackify.Environment
+              value: pli-dev
+            - name: elasticsearch_url
+              value: http://elasticsearch:9200
+            - name: rabbitmq_url
+              value: host=rabbitmq;port=5672;username=guest;password=guest;
+            - name: sql_connection_string
+              value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+            - name: prometheus
+              value: prometheus.istio-system.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: nsb-demo
+  labels:
+    service: api
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+    - name: "3030"
+      port: 3030
+      targetPort: 3030
+  type: LoadBalancer
+  selector:
+    service: api
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sagas
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: sagas
+    spec:
+      initContainers:
+        - name: rabbitmq-probe
+          image: peishu/rabbitmqprobe:v1
+      containers:
+        - name: sagas
+          image: peishu/lhi.nsbdemo.orders.sagas:v1
+          env:
+            - name: Stackify.ApiKey
+              value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+            - name: Stackify.ApiName
+              value: Lhi.NsbDemo.Orders
+            - name: Stackify.Environment
+              value: pli-dev
+            - name: elasticsearch_url
+              value: http://elasticsearch:9200
+            - name: rabbitmq_url
+              value: host=rabbitmq;port=5672;username=guest;password=guest;
+            - name: sql_connection_string
+              value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+            - name: prometheus
+              value: prometheus.istio-system.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sagas
+  namespace: nsb-demo
+  labels:
+    service: sagas
+spec:
+  ports:
+    - name: "3033"
+      port: 3033
+      targetPort: 3033
+  type: ClusterIP
+  selector:
+    service: sagas
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: platformhandler
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: platformhandler
+    spec:
+      initContainers:
+        - name: rabbitmq-probe
+          image: peishu/rabbitmqprobe:v1
+      containers:
+        - name: platformhandler
+          image: peishu/lhi.nsbdemo.orders.platformhandler:v1
+          env:
+            - name: Stackify.ApiKey
+              value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+            - name: Stackify.ApiName
+              value: Lhi.NsbDemo.Orders
+            - name: Stackify.Environment
+              value: pli-dev
+            - name: elasticsearch_url
+              value: http://elasticsearch:9200
+            - name: rabbitmq_url
+              value: host=rabbitmq;port=5672;username=guest;password=guest;
+            - name: sql_connection_string
+              value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+            - name: prometheus
+              value: prometheus.istio-system.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platformhandler
+  namespace: nsb-demo
+  labels:
+    service: platformhandler
+spec:
+  ports:
+    - name: "3032"
+      port: 3032
+      targetPort: 3032
+  type: ClusterIP
+  selector:
+    service: platformhandler
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: emailnotificationhandler
+  namespace: nsb-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: emailnotificationhandler
+    spec:
+      initContainers:
+        - name: rabbitmq-probe
+          image: peishu/rabbitmqprobe:v1
+      containers:
+        - name: emailnotificationhandler
+          image: peishu/lhi.nsbdemo.orders.emailnotificationhandler:v1
+          env:
+            - name: Stackify.ApiKey
+              value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+            - name: Stackify.ApiName
+              value: Lhi.NsbDemo.Orders
+            - name: Stackify.Environment
+              value: pli-dev
+            - name: elasticsearch_url
+              value: http://elasticsearch:9200
+            - name: rabbitmq_url
+              value: host=rabbitmq;port=5672;username=guest;password=guest;
+            - name: prometheus
+              value: prometheus.istio-system.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailnotificationhandler
+  namespace: nsb-demo
+  labels:
+    service: emailnotificationhandler
+spec:
+  ports:
+    - name: "3031"
+      port: 3031
+      targetPort: 3031
+  type: ClusterIP
+  selector:
+    service: emailnotificationhandler
+

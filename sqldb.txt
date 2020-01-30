@@ -1,0 +1,3 @@
+Data Source=.\\SqlExpress;Initial Catalog=NsbDemoSqlPersistence;Integrated Security=True
+Server=tcp:127.0.0.1,5433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+

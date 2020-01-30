@@ -1,0 +1,175 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: api
+    spec:
+      containers:
+      - name: api
+        image: peishu/lhi.nsbdemo.orders.api
+        ports:
+            - containerPort: 80            
+        env:
+          - name: Stackify.ApiKey 
+            value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+          - name: Stackify.ApiName
+            value: Lhi.NsbDemo.Orders
+          - name: Stackify.Environment
+            value: pli-dev
+          - name: elasticsearch_url
+            value: http://elasticsearch:9200
+          - name: rabbitmq_url
+            value: host=rabbitmq;port=5672;username=guest;password=guest;
+          - name: sql_connection_string
+            value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    service: api
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 80
+  - name: "3030"
+    port: 3030
+    targetPort: 3030
+  type: LoadBalancer
+  selector:
+    service: api
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sagas
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: sagas
+    spec:
+      containers:
+      - name: sagas
+        image: peishu/lhi.nsbdemo.orders.sagas
+        env:
+          - name: Stackify.ApiKey 
+            value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+          - name: Stackify.ApiName
+            value: Lhi.NsbDemo.Orders
+          - name: Stackify.Environment
+            value: pli-dev
+          - name: elasticsearch_url
+            value: http://elasticsearch:9200
+          - name: rabbitmq_url
+            value: host=rabbitmq;port=5672;username=guest;password=guest;
+          - name: sql_connection_string
+            value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sagas
+  labels:
+    service: sagas
+spec:
+  ports:
+  - name: "3033"
+    port: 3033
+    targetPort: 3033
+  type: ClusterIP
+  selector:
+    service: sagas
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: platformhandler
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: platformhandler
+    spec:
+      containers:
+      - name: platformhandler
+        image: peishu/lhi.nsbdemo.orders.platformhandler
+        env:
+          - name: Stackify.ApiKey 
+            value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+          - name: Stackify.ApiName
+            value: Lhi.NsbDemo.Orders
+          - name: Stackify.Environment
+            value: pli-dev
+          - name: elasticsearch_url
+            value: http://elasticsearch:9200
+          - name: rabbitmq_url
+            value: host=rabbitmq;port=5672;username=guest;password=guest;
+          - name: sql_connection_string
+            value: Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platformhandler
+  labels:
+    service: platformhandler
+spec:
+  ports:
+  - name: "3032"
+    port: 3032
+    targetPort: 3032
+  type: ClusterIP
+  selector:
+    service: platformhandler
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: emailnotificationhandler
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: emailnotificationhandler
+    spec:
+      containers:
+      - name: emailnotificationhandler
+        image: peishu/lhi.nsbdemo.orders.emailnotificationhandler
+        env:
+          - name: Stackify.ApiKey 
+            value: 4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+          - name: Stackify.ApiName
+            value: Lhi.NsbDemo.Orders
+          - name: Stackify.Environment
+            value: pli-dev
+          - name: elasticsearch_url
+            value: http://elasticsearch:9200
+          - name: rabbitmq_url
+            value: host=rabbitmq;port=5672;username=guest;password=guest;      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailnotificationhandler
+  labels:
+    service: emailnotificationhandler
+spec:
+  ports:
+  - name: "3031"
+    port: 3031
+    targetPort: 3031
+  type: ClusterIP
+  selector:
+    service: emailnotificationhandler
+

@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api:
+    environment:
+      - elasticsearch_url=http://elasticsearch:9200
+      - sql_connection_string=Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+      - rabbitmq_url=host=rabbitmq;port=5672;username=guest;password=guest;
+      - Stackify.ApiKey=4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      - Stackify.ApiName=Lhi.NsbDemo.Orders
+      - Stackify.Environment=pli-dev
+    ports:
+      - "8080:80"
+
+  emailnotificationhandler:
+    environment:
+      - elasticsearch_url=http://elasticsearch:9200
+      - rabbitmq_url=host=rabbitmq;port=5672;username=guest;password=guest;
+      - Stackify.ApiKey=4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      - Stackify.ApiName=Lhi.NsbDemo.Orders
+      - Stackify.Environment=pli-dev
+
+  platformhandler:
+    environment:
+      - elasticsearch_url=http://elasticsearch:9200
+      - sql_connection_string=Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+      - rabbitmq_url=host=rabbitmq;port=5672;username=guest;password=guest;
+      - Stackify.ApiKey=4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      - Stackify.ApiName=Lhi.NsbDemo.Orders
+      - Stackify.Environment=pli-dev
+
+  sagas:
+    environment:
+      - elasticsearch_url=http://elasticsearch:9200
+      - sql_connection_string=Server=tcp:sqldb,1433;Database=NsbDemoSqlPersistence;User Id=sa;Password=Pass@word;
+      - rabbitmq_url=host=rabbitmq;port=5672;username=guest;password=guest;
+      - Stackify.ApiKey=4Gc7Ld4Eg9Jf3Fp3Kh0Lo8Af2Gp5Gl2Jq5Jc7Ia
+      - Stackify.ApiName=Lhi.NsbDemo.Orders
+      - Stackify.Environment=pli-dev
+
+networks:
+  default:
+    external:
+      name: nsb-network

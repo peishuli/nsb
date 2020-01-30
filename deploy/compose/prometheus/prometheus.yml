@@ -1,0 +1,38 @@
+global:
+  scrape_interval: 5s
+
+rule_files:
+  #- 'nservicebus.rules.txt'
+
+scrape_configs:
+
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'api'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['api:3030']
+  
+  - job_name: 'emailnotificationhandler'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['emailnotificationhandler:3031']
+
+  - job_name: 'platformhandler'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['platformhandler:3032']
+
+  - job_name: 'sagas'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['sagas:3033']
+ 
+
+
+  
+
+  
